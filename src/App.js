@@ -1,25 +1,40 @@
-import logo from './logo.svg';
+import React, {useState, useEffect,} from "react"
+import BeerList from "./components/BeerList";
 import './App.css';
 
-function App() {
+
+export default function App() {
+  const [isClicked, setIsClicked] = useState(false);
+  const [beers, setBeers] = useState([]);
+  
+useEffect(()=> {
+  fetch("https://api.punkapi.com/v2/beers")
+  .then((response) => {
+    return response.json()
+  })
+  .then((data) => {
+    console.log(data)
+    setBeers(data)
+  })
+}, [])
+
+useEffect(()=> {}, [])
+
+useEffect(()=> {}, [])
+
+  const handleIsClicked = () => {
+    setIsClicked(!isClicked)
+  }
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/* <h1> Hello World {isClicked === true ? "world" : "Code "}</h1>
+      <button onClick= {handleIsClicked}>toggle</button> */}
+      <BeerList beers={beers}/>
+    
+    
     </div>
   );
 }
 
-export default App;
+
